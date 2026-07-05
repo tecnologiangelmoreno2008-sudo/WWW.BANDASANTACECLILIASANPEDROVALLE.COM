@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banda Santa Cecilia - Publicaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        :root {
+            --rojo: #8b0000;
+            --oro: #d4af37;
+            --azul: #0d47a1;
+            --crema: #f7efd9;
+            --texto: #2f2f2f;
+            --blanco: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--texto);
+            background: linear-gradient(135deg, var(--crema) 0%, #ffffff 100%);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--rojo), var(--azul));
+            color: white;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 1rem;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 24px auto 40px;
+            padding: 0 16px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 22px;
+            border-radius: 18px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            color: var(--rojo);
+        }
+
+        .campo {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--azul);
+        }
+
+        select,
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #d7cfa6;
+            padding: 10px 12px;
+            font-size: 1rem;
+            background: #fffdf7;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 8px;
+            background: linear-gradient(135deg, var(--rojo), var(--oro));
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .ayuda {
+            margin-top: 10px;
+            font-size: 0.92rem;
+            color: #6b6b6b;
+        }
+
+        .publicacion {
+            background: var(--blanco);
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid var(--oro);
+        }
+
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .autor {
+            margin: 0;
+            color: var(--rojo);
+            font-weight: 700;
+        }
+
+        .fecha {
+            margin: 0;
+            color: #808080;
+            font-size: 0.86rem;
+        }
+
+        .texto-publicacion {
+            margin: 10px 0 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        img,
+        video {
+            width: 100%;
+            display: block;
+            margin-top: 12px;
+            border-radius: 12px;
+            object-fit: cover;
+            max-height: 420px;
+        }
+
+        .acciones-publicacion {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .action-btn,
+        .btn-delete {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #f7efd9;
+            color: var(--azul);
+        }
+
+        .action-btn:hover,
+        .btn-delete:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-delete {
+            background: #ffe3e3;
+            color: var(--rojo);
+        }
+
+        .comentarios {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+        }
+
+        .comentario-item {
+            background: #fcfaf2;
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+        }
+
+        .comentario-item p {
+            margin: 2px 0 0;
+            line-height: 1.5;
+        }
+
+        .comentario-item small {
+            color: #7a7a7a;
+        }
+
+        .input-comentario {
+            width: 100%;
+            min-height: 70px;
+            border-radius: 10px;
+            border: 1px solid #d7cfa6;
+            padding: 8px 10px;
+            margin-top: 8px;
+            resize: vertical;
+        }
+
+        .vacio {
+            text-align: center;
+            padding: 24px;
+            color: #6b6b6b;
+            background: #fcfaf2;
+            border-radius: 14px;
+            border: 1px dashed #d7cfa6;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .encabezado {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="Index.html">BANDA SANTA CECILIA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="Index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="MomentosDeLaBanda.html">Historia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Videos.html">Videos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Publicaciones.html">Publicaciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <h1>🎺 Banda Santa Cecilia</h1>
+        <p>90 años de historia, tradición y música en San Pedro, Valle del Cauca</p>
+    </header>
+
+    <div class="contenedor">
+        <section class="panel">
+            <h2>Crear publicación</h2>
+
+            <div class="campo">
+                <label for="rol">Publicado por</label>
+                <select id="rol">
+                    <option value="Administrador">Autor de la Pagina web</option>
+                    <option value="Director de la banda">Director de la banda</option>
+                    <option value="Miembro de la banda">Miembro de la banda</option>
+                     <option value="Visitante">Visitante</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="texto">Mensaje</label>
+                <textarea id="texto" placeholder="Escribe una noticia, saludo o recuerdo para la banda..."></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="archivo">Adjuntar imagen o video</label>
+                <input type="file" id="archivo" accept="image/*,video/*">
+            </div>
+
+            <button onclick="publicar()">Publicar</button>
+            <p class="ayuda">Las publicaciones se guardan en este navegador para que permanezcan visibles aunque cierres
+                o recargues la página.</p>
+        </section>
+
+        <div id="muro"></div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = "bandaSantaCeciliaPublicaciones";
+        const DB_NAME = "bandaSantaCeciliaDB";
+        const STORE_NAME = "archivos";
+        let publicaciones = cargarPublicaciones();
+        let dbPromise = abrirBaseDeDatos();
+
+        renderPublicaciones();
+
+        async function publicar() {
+            const texto = document.getElementById("texto").value.trim();
+            const rol = document.getElementById("rol").value;
+            const archivoInput = document.getElementById("archivo");
+            const archivo = archivoInput.files[0];
+
+            if (!texto && !archivo) {
+                alert("Debe escribir algo o seleccionar una imagen o video.");
+                return;
+            }
+
+            const archivoTipo = archivo ? archivo.type : null;
+            let archivoId = null;
+
+            if (archivo) {
+                archivoId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+                await guardarArchivo(archivoId, archivo);
+            }
+
+            const nuevaPublicacion = {
+                id: Date.now(),
+                autor: rol,
+                texto: texto,
+                fecha: new Date().toISOString(),
+                likes: 0,
+                comentarios: [],
+                archivoId: archivoId,
+                archivoTipo: archivoTipo,
+                archivoNombre: archivo ? archivo.name : ""
+            };
+
+            publicaciones.unshift(nuevaPublicacion);
+            guardarPublicaciones();
+            await renderPublicaciones();
+
+            document.getElementById("texto").value = "";
+            archivoInput.value = "";
+        }
+
+        function cargarPublicaciones() {
+            try {
+                const datos = localStorage.getItem(STORAGE_KEY);
+                const guardadas = datos ? JSON.parse(datos) : [];
+                return guardadas.map(publicacion => ({
+                    ...publicacion,
+                    likes: Number(publicacion.likes || 0),
+                    comentarios: Array.isArray(publicacion.comentarios) ? publicacion.comentarios : []
+                }));
+            } catch (error) {
+                console.error("No se pudieron cargar las publicaciones", error);
+                return [];
+            }
+        }
+
+        function guardarPublicaciones() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(publicaciones));
+        }
+
+        async function renderPublicaciones() {
+            const muro = document.getElementById("muro");
+
+            if (publicaciones.length === 0) {
+                muro.innerHTML = '<div class="vacio">Aún no hay publicaciones. ¡Anuncia la próxima actividad de la banda aquí!</div>';
+                return;
+            }
+
+            const publicacionesHTML = await Promise.all(publicaciones.map(crearPublicacionHTML));
+            muro.innerHTML = publicacionesHTML.join("");
+        }
+
+        async function crearPublicacionHTML(publicacion) {
+            const fecha = new Date(publicacion.fecha).toLocaleString("es-ES", {
+                dateStyle: "medium",
+                timeStyle: "short"
+            });
+
+            let contenidoArchivo = "";
+            if (publicacion.archivoId) {
+                const blob = await obtenerArchivo(publicacion.archivoId);
+                if (blob && publicacion.archivoTipo?.startsWith("image")) {
+                    const url = URL.createObjectURL(blob);
+                    contenidoArchivo = `<img src="${url}" alt="Imagen publicada">`;
+                } else if (blob && publicacion.archivoTipo?.startsWith("video")) {
+                    const url = URL.createObjectURL(blob);
+                    contenidoArchivo = `<video controls preload="metadata"><source src="${url}" type="${publicacion.archivoTipo}"></video>`;
+                }
+            } else if (publicacion.archivoData && publicacion.archivoTipo?.startsWith("image")) {
+                contenidoArchivo = `<img src="${publicacion.archivoData}" alt="Imagen publicada">`;
+            } else if (publicacion.archivoData && publicacion.archivoTipo?.startsWith("video")) {
+                contenidoArchivo = `<video controls src="${publicacion.archivoData}"></video>`;
+            }
+
+            const comentariosHTML = (publicacion.comentarios || []).map(comentario => `
+                <div class="comentario-item">
+                    <small>${escaparHTML(comentario.autor || "Visitante")} · ${new Date(comentario.fecha).toLocaleString("es-ES", { dateStyle: "short", timeStyle: "short" })}</small>
+                    <p>${escaparHTML(comentario.texto)}</p>
+                </div>
+            `).join("");
+
+            return `
+                <article class="publicacion">
+                    <div class="encabezado">
+                        <h3 class="autor">${escaparHTML(publicacion.autor)}</h3>
+                        <p class="fecha">${fecha}</p>
+                    </div>
+                    ${publicacion.texto ? `<p class="texto-publicacion">${escaparHTML(publicacion.texto)}</p>` : ""}
+                    ${contenidoArchivo}
+                    <div class="acciones-publicacion">
+                        <button class="action-btn" onclick="darLike(${publicacion.id})">👍 Me gusta (${Number(publicacion.likes || 0)})</button>
+                    </div>
+                    <div class="comentarios">
+                        ${comentariosHTML}
+                        <textarea id="comentario-${publicacion.id}" class="input-comentario" placeholder="Escribe un comentario..."></textarea>
+                        <button class="action-btn" onclick="agregarComentario(${publicacion.id})">Comentar</button>
+                    </div>
+                </article>
+            `;
+        }
+
+        function darLike(id) {
+            const publicacion = publicaciones.find(item => item.id === id);
+            if (!publicacion) return;
+
+            const key = `like-${id}`;
+            const yaDioLike = sessionStorage.getItem(key) === "1";
+
+            if (yaDioLike) {
+                publicacion.likes = Math.max(0, Number(publicacion.likes || 0) - 1);
+                sessionStorage.removeItem(key);
+            } else {
+                publicacion.likes = Number(publicacion.likes || 0) + 1;
+                sessionStorage.setItem(key, "1");
+            }
+
+            guardarPublicaciones();
+            renderPublicaciones();
+        }
+
+        function agregarComentario(id) {
+            const publicacion = publicaciones.find(item => item.id === id);
+            if (!publicacion) return;
+
+            const textarea = document.getElementById(`comentario-${id}`);
+            const texto = textarea?.value.trim();
+            if (!texto) {
+                alert("Escribe un comentario antes de publicar.");
+                return;
+            }
+
+            publicacion.comentarios = publicacion.comentarios || [];
+            publicacion.comentarios.unshift({
+                id: Date.now(),
+                autor: "Visitante",
+                texto: texto,
+                fecha: new Date().toISOString()
+            });
+
+            guardarPublicaciones();
+            renderPublicaciones();
+        }
+
+        function escaparHTML(texto) {
+            return String(texto)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function abrirBaseDeDatos() {
+            return new Promise((resolve, reject) => {
+                const solicitud = indexedDB.open(DB_NAME, 1);
+
+                solicitud.onupgradeneeded = () => {
+                    const db = solicitud.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: "id" });
+                    }
+                };
+
+                solicitud.onsuccess = () => resolve(solicitud.result);
+                solicitud.onerror = () => reject(solicitud.error);
+            });
+        }
+
+        async function guardarArchivo(id, archivo) {
+            const db = await dbPromise;
+            return new Promise((resolve, reject) => {
+                const transaccion = db.transaction(STORE_NAME, "readwrite");
+                const almacen = transaccion.objectStore(STORE_NAME);
+                const solicitud = almacen.put({ id, archivo });
+                solicitud.onsuccess = () => resolve();
+                solicitud.onerror = () => reject(solicitud.error);
+            });
+        }
+
+        async function obtenerArchivo(id) {
+            const db = await dbPromise;
+            return new Promise((resolve, reject) => {
+                const transaccion = db.transaction(STORE_NAME, "readonly");
+                const almacen = transaccion.objectStore(STORE_NAME);
+                const solicitud = almacen.get(id);
+                solicitud.onsuccess = () => resolve(solicitud.result?.archivo || null);
+                solicitud.onerror = () => reject(solicitud.error);
+            });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
